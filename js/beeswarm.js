@@ -16,6 +16,33 @@ function beeswarm(i) {
   function makesubDist(error, data) {
     subDist = data;
 
+    if (Modernizr.svg) {
+      //load config
+      d3.json("configbs.json", function(error, config) {
+
+        dvcbs=config
+        subDist = subDist.map(d => ({ 'id': d['parents'], 'unique': d['Area Name'], 'value': parseFloat(d['Index value']) }))
+        graphic_data = subDist
+        graphic_data.forEach((item, i) => {
+          if (item.unique==place.name) {
+            item.id = place.name
+          } else if (item.id == selected.parent) {
+            item.id = region.name
+          } else {
+            item.id = "Rest of England"
+          }
+        });
+        //use pym to create iframed chart dependent on specified variables
+        pymChild = new pym.Child({ renderCallback: drawGraphic});
+
+      })
+    } else {
+       //use pym to create iframe containing fallback image (which is set as default)
+      pymChild = new pym.Child();
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
   }
 
   function drawGraphic() {
@@ -116,44 +143,6 @@ function beeswarm(i) {
       pymChild.sendHeight();
     }
 
-  }
-
-
-  if (Modernizr.svg) {
-    //load config
-    d3.json("configbs.json", function(error, config) {
-    dvcbs=config
-
-    setTimeout(function(){
-      subDist = subDist.map(d => ({ 'id': d['parents'], 'unique': d['Area Name'], 'value': parseFloat(d['Index value']) }))
-      graphic_data = subDist
-      graphic_data.forEach((item, i) => {
-        if (item.unique==place.name) {
-          item.id = place.name
-        }
-        else if (item.id == selected.parent) {
-          item.id = region.name
-        }
-        else {
-          item.id = "Rest of England"
-        }
-      });
-    }, 100);
-
-    setTimeout(function(){
-      //use pym to create iframed chart dependent on specified variables
-      pymChild = new pym.Child({ renderCallback: drawGraphic});
-    }, 200);
-
-
-
-    })
-  } else {
-     //use pym to create iframe containing fallback image (which is set as default)
-    pymChild = new pym.Child();
-    if (pymChild) {
-      pymChild.sendHeight();
-    }
   }
 
   function  createLegend(groups) {
