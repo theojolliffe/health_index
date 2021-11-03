@@ -36,7 +36,7 @@ if (Modernizr.webgl) {
       d.typepl = types[d.type].pl;
       d.typenm = types[d.type].name;
     });
-    selected = options.find(d => d.name == 'Camden');
+    selected = options.find(d => d.name == 'Barnet');
     loadAreaHealth(selected.code);
 
     function indicatorRank(obj) {

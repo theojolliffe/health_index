@@ -15,7 +15,6 @@ function beeswarm(i) {
 
   function makesubDist(error, data) {
     subDist = data;
-    console.log('subDist1', subDist)
 
   }
 
@@ -74,7 +73,7 @@ function beeswarm(i) {
 
     createLegend(groups);
 
-    console.log("graphic_data", graphic_data)
+    // console.log("graphic_data", graphic_data) // Does this for some reason stop the problem of graphic data being read before being defined?
 
     var cell = g.append("g")
       .attr("class", "cells")
@@ -124,7 +123,6 @@ function beeswarm(i) {
     //load config
     d3.json("configbs.json", function(error, config) {
     dvcbs=config
-    console.log('subDist2', subDist)
 
     subDist = subDist.map(d => ({ 'id': d['parents'], 'unique': d['Area Name'], 'value': parseFloat(d['Index value']) }))
     graphic_data = subDist
@@ -140,8 +138,12 @@ function beeswarm(i) {
       }
     });
 
-    //use pym to create iframed chart dependent on specified variables
-    pymChild = new pym.Child({ renderCallback: drawGraphic});
+    setTimeout(function(){
+      //use pym to create iframed chart dependent on specified variables
+      pymChild = new pym.Child({ renderCallback: drawGraphic});
+    }, 100);
+
+
 
     })
   } else {
