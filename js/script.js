@@ -190,7 +190,7 @@ div#co-box
         | In 2018, #[+value(place.name)]
         | was ranked
         | #[+value(place.data.Overall.total[2018].Rank, {'ORDINAL_NUMBER':true })]
-        | healthiest out of 149 districts in England. It's index score was
+        | healthiest out of 149 districts in England. Its index score was
         | #[+updown]
         | #[+value(Math.abs(place.data.Overall.total[2018].Change1year/100), {'FORMAT': '0.0%'})]
         | on last year
@@ -235,7 +235,6 @@ mixin firstSen(i)
         | between 2017 and 2018
     else if (subDomain[i].hlRankType=="Change3year Rank")
         | in the three years between 2015 and 2018
-    | .
 
 mixin subd(i)
     | #[+value(subDomain[i].Measure)]
